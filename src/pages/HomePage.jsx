@@ -1,5 +1,11 @@
+import MainLayout from '../layouts/MainLayout'
+
 const HomePage = () => {
-  return <h1>HomePage</h1>
+  return (
+    <MainLayout>
+      <h1>首頁內容</h1>
+    </MainLayout>
+  )
 }
 
 export default HomePage
