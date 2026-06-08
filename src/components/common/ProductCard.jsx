@@ -1,11 +1,13 @@
 import { useCart } from "../../context/CartContext"
+import { Link } from "react-router-dom"
 
 const ProductCard = ({ product }) => {
     const {addToCart} = useCart()
 
   return (
     <div className="bg-white border border-gray-200 hover:border-red-500 hover:-translate-y-1 transition cursor-pointer">
-      <div className="relative">
+    <Link to={`/products/${product.id}`}>
+    <div className="relative">
         <img
           src={product.image}
           alt={product.title}
@@ -31,6 +33,8 @@ const ProductCard = ({ product }) => {
             已售出 {product.sold || 120}
           </p>
         </div>
+    </div>
+    </Link>
         <button
             onClick={() =>addToCart(product)}
             className="mt-3 w-full bg-red-500 text-white py-2 hover:bg-red-600"
@@ -39,7 +43,6 @@ const ProductCard = ({ product }) => {
 
             </button>
       </div>
-    </div>
   )
 }
 
