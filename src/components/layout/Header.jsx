@@ -2,9 +2,15 @@ import { Link } from "react-router-dom"
 import { FaFacebook, FaInstagram } from "react-icons/fa"
 import Container from "../common/Container"
 import { useCart } from "../../context/CartContext"
+import { useSearch } from "../../context/SearchContext"
 
 const Header = () => {
      const { cartItems } = useCart()
+     const cartTotalQuantity = cartItems.reduce(
+            (sum, item) => sum + item.quantity,
+                0
+                )
+     const { searchKeyword, setSearchKeyword } = useSearch()
   return (
     <header
       className="
@@ -34,14 +40,14 @@ const Header = () => {
           >
 
             {/* Left */}
-            <div className="flex gap-4">
+            <div className="hidden md:flex gap-4">
               <span>賣家中心</span>
               <span>開始隨拍即賣囉!</span>
               <span>下載</span>
             </div>
 
             {/* Right */}
-            <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
               <span>追蹤我們</span>
 
               <FaFacebook className="cursor-pointer" />
@@ -54,29 +60,29 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-<div className="h-[70px] bg-red-700 text-white">
+<div className="bg-red-700 text-white">
   <Container>
-    <div className="h-[70px] flex items-center gap-12">
-      <Link to="/" className="text-3xl font-bold">
-        Fake Store
+    <div className="py-3 flex flex-col gap-3 md:h-[70px] md:flex-row md:items-center md:gap-12">
+      <Link to="/" className="text-2xl md:text-3xl font-bold">
+        TrendHub
       </Link>
 
-      <div className="flex flex-1">
-        <input
-        type="text"
-        placeholder="搜尋商品"
-        className="
+      <div className="flex w-full md:flex-1">
+            <input
+                type="text"
+                placeholder="搜尋商品"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                className="
                 flex-1
                 bg-white
                 text-black
-
                 px-4
                 py-2
-
                 rounded-l-md
                 outline-none
-                "
-/>
+                            "
+            />
 
         <button
           className="
@@ -91,7 +97,7 @@ const Header = () => {
         </button>
       </div>
 
-      <nav className="flex gap-6">
+      <nav className="flex gap-4 md:gap-6 text-sm md:text-base">
         <Link to="/" className="hover:text-gray-200 transition-colors">
           首頁
         </Link>
@@ -101,7 +107,7 @@ const Header = () => {
         </Link>
 
         <Link to="/cart" className="hover:text-gray-200 transition-colors">
-          購物車 ({cartItems.length})
+          購物車 ({cartTotalQuantity})
         </Link>
       </nav>
     </div>

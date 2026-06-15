@@ -20,16 +20,16 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="p-3">
-        <h3 className="text-sm line-clamp-2 min-h-[40px]">
+       <h3 className="text-sm line-clamp-2 min-h-[40px]">
           {product.title}
         </h3>
 
-        <div className="mt-3 flex items-end justify-between">
+        <div className="mt-3 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1">
           <p className="text-red-500 font-bold">
             NT$ {product.price}
           </p>
 
-          <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-500 self-end sm:self-auto">
             已售出 {product.sold || 120}
           </p>
         </div>

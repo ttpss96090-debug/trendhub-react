@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
 
 return (
   <div className="max-w-5xl mx-auto px-6 pt-32 pb-10">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 border">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 rounded-lg shadow-sm">
       <div className="flex justify-center">
         <img
           src={product.image}

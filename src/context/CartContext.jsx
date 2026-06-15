@@ -14,7 +14,23 @@ export const CartProvider = ({ children }) => {
 
 
   const addToCart = (product) => {
-    setCartItems([...cartItems, product])
+     const existItem = cartItems.find((item) => item.id === product.id)
+
+    if (existItem) {
+            setCartItems(
+            cartItems.map((item) =>
+            item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+      )
+        )
+    } else {
+    setCartItems([
+      ...cartItems,
+      { ...product, quantity: 1 }
+    ])
+  }
+
     console.log("加入購物車：", product)
   }
   const removeFromCart = (id) => {
@@ -23,9 +39,35 @@ export const CartProvider = ({ children }) => {
   )
 }
 
+        const increaseQuantity = (id) => {
+        setCartItems(
+        cartItems.map((item) =>
+        item.id === id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+        )
+    )
+}
+
+        const decreaseQuantity = (id) => {
+        setCartItems(
+        cartItems
+        .map((item) =>
+        item.id === id
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+      )
+      .filter((item) => item.quantity > 0)
+    )
+    }
+
+    const clearCart = () => {
+        setCartItems([])
+    }
+
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart,removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart,removeFromCart ,increaseQuantity,decreaseQuantity,clearCart}}>
       {children}
     </CartContext.Provider>
   )
