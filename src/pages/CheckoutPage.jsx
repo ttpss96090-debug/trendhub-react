@@ -1,6 +1,8 @@
 import { useCart } from "../context/CartContext"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { db } from "../firebase/firebase"
+import {collection,addDoc,} from "firebase/firestore"
 
 const CheckoutPage = () => {
   const { cartItems ,clearCart } = useCart()
@@ -29,7 +31,7 @@ const CheckoutPage = () => {
         })
       }
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
       e.preventDefault()
       if (cartItems.length === 0) {
       alert("購物車是空的")
@@ -45,13 +47,26 @@ const CheckoutPage = () => {
       return
   }
 
+     try {
+      console.log("開始寫入 Firestore")
+    await addDoc(collection(db, "orders"), {
+      customer: formData,
+      items: cartItems,
+      totalQuantity,
+      totalPrice,
+      createdAt: new Date(),
+    })
+
     console.log("訂單資料：", formData)
     console.log("購物車：", cartItems)
 
     clearCart()
     navigate("/order-success")
+  } catch (error) {
+    console.log(error)
+    alert("訂單送出失敗")
   }
-
+}
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-40 md:pt-32 pb-10">
       <h1 className="text-2xl font-bold mb-6">結帳頁</h1>

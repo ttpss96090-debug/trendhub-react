@@ -7,6 +7,9 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
 import OrderSuccessPage from "./pages/OrderSuccessPage"
+import RegisterPage from "./pages/RegisterPage"
+import LoginPage from "./pages/LoginPage"
+import ProtectedRoute from "./components/common/ProtectedRoute"
 
 const App = () => {
   return (
@@ -16,9 +19,26 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route
+                  path="/cart"
+                  element={
+                    <ProtectedRoute>
+                <CartPage />
+          </ProtectedRoute>
+          }
+        />
+
+        <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+              <CheckoutPage />
+        </ProtectedRoute>
+        }
+      />
           <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,9 @@ import { FaFacebook, FaInstagram } from "react-icons/fa"
 import Container from "../common/Container"
 import { useCart } from "../../context/CartContext"
 import { useSearch } from "../../context/SearchContext"
+import { useAuth } from "../../context/AuthContext"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase/firebase"
 
 const Header = () => {
      const { cartItems } = useCart()
@@ -11,6 +14,7 @@ const Header = () => {
                 0
                 )
      const { searchKeyword, setSearchKeyword } = useSearch()
+     const { currentUser } = useAuth()
   return (
     <header
       className="
@@ -97,7 +101,7 @@ const Header = () => {
         </button>
       </div>
 
-      <nav className="flex gap-4 md:gap-6 text-sm md:text-base">
+      <nav className="flex flex-wrap gap-4 md:gap-6 text-sm md:text-base">
         <Link to="/" className="hover:text-gray-200 transition-colors">
           首頁
         </Link>
@@ -109,6 +113,36 @@ const Header = () => {
         <Link to="/cart" className="hover:text-gray-200 transition-colors">
           購物車 ({cartTotalQuantity})
         </Link>
+        {currentUser ? (
+  <>
+        <span className="text-gray-100">
+       {currentUser.email.split("@")[0]}
+            </span>
+
+        <button
+            onClick={() => signOut(auth)}
+        className="hover:text-gray-200 transition-colors"
+        >
+             登出
+        </button>
+    </>
+    ) : (
+  <>
+        <Link
+            to="/login"
+        className="hover:text-gray-200 transition-colors"
+        >
+        登入
+        </Link>
+
+        <Link
+        to="/register"
+        className="hover:text-gray-200 transition-colors"
+        >
+        註冊
+        </Link>
+    </>
+    )}
       </nav>
     </div>
   </Container>
